@@ -5,7 +5,6 @@
 int main() {
 	char a[100];
 	printf("Enter the sentence:\n");
-
 	scanf("%[^\n]%*c",a);
 	
 	printf("Orginal String:\n");
