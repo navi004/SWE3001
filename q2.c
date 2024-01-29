@@ -2,7 +2,6 @@
 
 #include <stdio.h>
 
-
 int main() {
 	int num;
 	printf("Enter the size of the array: \n"); 
