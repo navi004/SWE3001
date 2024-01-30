@@ -1,31 +1,23 @@
-//upper to lower and vice versa
-#include <stdio.h>
-#include <string.h>
+// A C program to demonstrate Zombie Process. 
+// Child becomes Zombie as parent is sleeping 
+// when child process exits. 
+#include <stdlib.h> 
+#include <sys/types.h> 
+#include <unistd.h> 
+int main() 
+{ 
+	// Fork returns process id 
+	// in parent process 
+	pid_t child_pid = fork(); 
 
-int main() {
-	char a[100];
-	printf("Enter the sentence:\n");
-	scanf("%[^\n]%*c",a);
-	
-	printf("Orginal String:\n");
-	for(int i=0;a[i] != '\0';i++) {
-	printf("%c",a[i]);
-	}
-	
-    printf("\n");
-    	
-    printf("String After Conversion:\n");
-	for(int i=0;a[i] != '\0';i++) {
-	    if(a[i] > 64 && a[i] < 9){
-	        printf("%c",a[i] + 32);
-	    }
-	    else if(a[i] > 96 && a[i] < 123) {
-	        printf("%c",a[i]-32);
-	    }
-	    else {
-	        printf("%c",a[i]);
-	    }
-	}
-}	
+	// Parent process 
+	if (child_pid > 0) 
+		sleep(50); 
 
+	// Child process 
+	else		
+		exit(0); 
+
+	return 0; 
+} 
 
