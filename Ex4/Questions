@@ -1,0 +1,7 @@
+Ex - 4
+Questions 
+
+1. Implementing data parallelism using pthreads.Write a c program to demonstrate creation and termination of the threads using pthreads library functions. Use appropriate thread functions for creation and termination and display the outputs for both
+
+2. Create 2 threads that performs two different functions concurrently such as one thread checks whether the number is odd or even and the other thread checks whether it is prime number. Obtain the user input as a single number or single value and execute both the threads for the same input. Display the output of each thread along with their thread id.
+
