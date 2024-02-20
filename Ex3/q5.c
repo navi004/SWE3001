@@ -34,6 +34,8 @@ int main() {
 
         // The child process terminates
         printf("Child Process (PID %d) terminating\n", getpid());
+        printf("Child Process (PID %d) with Parent (PPID %d)\n", getpid(), getppid());
+
     }
 
     return 0;
