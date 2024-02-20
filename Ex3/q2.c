@@ -10,10 +10,9 @@ void printProcessTree(struct Process processes[], int size, int currentId, int l
         return;
     }
 
-    for (int i = 0; i < level; i++) {
-        printf("  ");
+    for (int i = 0; i < level - 1; i++) {
+        printf("│   ");
     }
-
     printf("Process ID: %d, Parent ID: %d\n", currentId, processes[currentId].parentId);
 
     for (int i = 0; i < size; i++) {
@@ -43,3 +42,4 @@ int main() {
 
     return 0;
 }
+
