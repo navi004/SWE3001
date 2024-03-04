@@ -71,7 +71,7 @@ OR
 #include <stdlib.h>
 
 void terminate(int id,pid_t pid){
-    printf("Process %d with pid %d is terminated\n",id,pid);
+    printf("Child Process %d with pid %d is terminated\n",id,pid);
 }
 
 int main(){
