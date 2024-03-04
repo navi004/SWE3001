@@ -28,4 +28,31 @@ int main() {
 	        printf("%c",a[i]);
 	    }
 	}
+
 }	
+
+
+OR
+
+
+#include <stdio.h>
+
+int main(){
+    char str[100];
+    printf("Enter the sentence : ");
+    //fgets(str,100,stdin);
+    scanf("%[^\n]%*c",str);
+    
+    for(int i=0;str[i]!='\0';i++){
+        if(str[i]>= 'A' && str[i] <= 'Z'){
+            printf("%c",str[i]+32);
+        }
+        else if(str[i]> 'a' && str[i]<= 'z'){
+            printf("%c",str[i]-32);
+        }
+        else {
+            printf("%c",str[i]);
+        }
+    }
+    return 0;
+}
