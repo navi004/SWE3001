@@ -61,3 +61,55 @@ int main() {
 
     return 0;
 }
+
+
+OR
+
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <stdlib.h>
+
+void terminate(int id,pid_t pid){
+    printf("Process %d with pid %d is terminated\n",id,pid);
+}
+
+int main(){
+    pid_t child_pids[4];
+    printf("Parent Process pid : %d\n",getpid());
+    for(int i=0;i<4;i++){
+        pid_t child_pid = fork();
+
+        if(child_pid < 0){
+            fprintf(stderr,"Fork Failed\n");
+            exit(EXIT_FAILURE);
+        }
+        if(child_pid == 0){
+            printf("Child Process %d with pid : %d created\n",i+1,getpid());
+            sleep(1);
+            exit(EXIT_SUCCESS);
+        }
+        else{
+            
+            child_pids[i] = child_pid;
+        }
+    }
+    waitpid(child_pids[2],NULL,0);
+    terminate(3,child_pids[2]);
+
+    waitpid(child_pids[1],NULL,0);
+    terminate(2,child_pids[1]);
+
+    waitpid(child_pids[0],NULL,0);
+    terminate(1,child_pids[0]);
+
+    waitpid(child_pids[3],NULL,0);
+    terminate(4,child_pids[3]);
+
+    waitpid(getpid(),NULL,0);
+    printf("Parent process with pid %d is terminated",getpid());
+
+    return 0;
+
+
+}
