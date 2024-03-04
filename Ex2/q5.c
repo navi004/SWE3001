@@ -18,7 +18,7 @@ int main() {
     	
     printf("String After Conversion:\n");
 	for(int i=0;a[i] != '\0';i++) {
-	    if(a[i] > 64 && a[i] < 9){
+	    if(a[i] > 64 && a[i] < 91){
 	        printf("%c",a[i] + 32);
 	    }
 	    else if(a[i] > 96 && a[i] < 123) {
