@@ -31,7 +31,17 @@
         printf("P[%d]:",i+1);
         scanf("%d",at+i);
     }
- 
+    //bubble sort for arrival time ordering
+    for(int i=0;i<n-1;i++){
+        for(int j=0;j<n-i-1;j++){
+            if(at[i] > at[j]){
+                int temp = at[i];
+                at[i] = at[j];
+                at[j] = temp;
+            }
+        }
+    }
+    
     wt[0]=0;   
  
     for(i=1;i<n;i++)
@@ -60,6 +70,7 @@
     printf("__________________________________________");
     printf("\n");
     printf("|");
+    
     for(int i=0;i<n;i++){
         printf("| P[%d] |",i+1);
     }
