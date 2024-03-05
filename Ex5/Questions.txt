@@ -1,0 +1,25 @@
+1. Consider a ticket counter in a railway station where the people waits in a queue for booking the ticket. 
+   The person who arrives first in the queue can buy the ticket first and then the next person, this continues 
+   until the queue becomes empty.The order of arrival of a person in the queue decides their chance to buy the 
+   ticket.Write a program in C to implement an appropriate scheduling algorithm to calculate the average waiting 
+   time and average turn around time,taken by the person in the queue for the booking process. Display the ghant 
+   chart to represent the order of the person in the queue and also waiting time and turnaround time for each person.
+
+2. (i)Consider an online delivery app, whcih delivers the product to the customers who have booked online. 
+   The online delivery app always choose the nearest customer first based on distance for delivery and 
+   then the next customer. Suppose if two customers are booking the product at the same time then nearest 
+   customer will be choosen first. Consider the booking time as arrival time . Choose an appropriate 
+   scheduling algorithm to deliver the product in an efficient manner.
+   
+   (ii)For the same delivery app for the frequent customer who is using the app will be given a discount 
+   code and consider that customer is choosen with the code as highest priority that customer will be delivered first. 
+   Write a program in C to implement two scheduling for case i and case ii. Display all the results on the screen. 
+        
+        
+        
+3. Consider a junction of road where 4 lanes meet at this junction, every often there is a problem of jamming of vehicles
+   at this junction. To overcome this problem ,a traffic signal was planned to be installed at the junction, the operation
+   of the signal is planned in such a way that the vehicles in each lane of the road will be allowed only for three minutes 
+   and then it will be stopped . The chance will be given for next lane of the road. Write a c program to implement an 
+   scheduling algorithm to illustrate how the vehicles cross the junction with a minimum waiting time. 
+   Calculate the average waiting time and average turn around time. Display qhant chart and all results on screen
