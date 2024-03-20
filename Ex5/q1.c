@@ -10,73 +10,84 @@
 //First Come First Serve
 
 #include<stdio.h>
- 
- int main()
- 
-{
-    int n,bt[20],wt[20],tat[20],at[20],i,j;
-    float avwt = 0.0,avtat = 0.0;                             //bt = burst out time 
-    printf("Enter total number of people:");                 //wt = waiting time
-    scanf("%d",&n);                                          //tat = turn around time
-                                                             //avwt = average turn around time
-    printf("Enter Process Burst Time\n");                    //avtat = average turn around time
+
+struct Process {
+
+    int Pnum;
+    int burstTime;
+    int arrivalTime;
+    int waitingTime;
+    int turnaroundTime;
+};
+
+int main() {
+    int n, i, j;
+    float averageWaitingTime = 0.0, averageTurnaroundTime = 0.0;
+
+    printf("Enter the total number of people: ");
+    scanf("%d", &n);
+
+    struct Process processes[n];
+
+    printf("Enter Process Burst Time\n");                 
     for(i=0;i<n;i++)
-    {
-        printf("P[%d]:",i+1);
-        scanf("%d",&bt[i]);
+    {   
+        processes[i].Pnum = i+1;
+        printf("P[%d]:",processes[i].Pnum);
+        scanf("%d",&processes[i].burstTime);
     }
     
     printf("\nEnter the Arrival Time\n");
     for(i=0;i<n;i++){
-        printf("P[%d]:",i+1);
-        scanf("%d",at+i);
+        printf("P[%d]:",processes[i].Pnum);
+        scanf("%d",&processes[i].arrivalTime);
     }
-    //bubble sort for arrival time ordering
-    for(int i=0;i<n-1;i++){
-        for(int j=0;j<n-i-1;j++){
-            if(at[i] > at[j]){
-                int temp = at[i];
-                at[i] = at[j];
-                at[j] = temp;
+
+    // Sort the processes based on arrival time
+    for(i = 0; i < n-1; i++) {
+        for(j = 0; j < n-i-1; j++) {
+            if(processes[j].arrivalTime > processes[j+1].arrivalTime) {
+                struct Process temp = processes[j];
+                processes[j] = processes[j+1];
+                processes[j+1] = temp;
             }
         }
     }
-    
-    wt[0]=0;   
- 
-    for(i=1;i<n;i++)
-    {
-        wt[i]=0;
-        for(j=0;j<i;j++)
-            wt[i]+=bt[j];
-            wt[i] = wt[i] - at[i];
+
+    processes[0].waitingTime = 0;
+
+    // Calculate waiting time for each process
+    for(i = 1; i < n; i++) {
+        processes[i].waitingTime = 0;
+        for(j = 0; j < i; j++) {
+            processes[i].waitingTime += processes[j].burstTime;
+        }
+        processes[i].waitingTime -= processes[i].arrivalTime;
     }
- 
-    printf("\nProcess\t\tArrival Time\tBurst Time\tWaiting Time\tTurnaround Time");
- 
-    for(i=0;i<n;i++)
-    {
-        tat[i]=bt[i]+wt[i];
-        avwt+=wt[i];
-        avtat+=tat[i];
-        printf("\nP[%d]\t\t%d\t\t%d\t\t%d\t\t%d",i+1,at[i],bt[i],wt[i],tat[i]);
+
+    printf("\nProcess\t\tArrival Time\tBurst Time\tWaiting Time\tTurnaround Time\n");
+
+    // Calculate turnaround time and display process details
+    for(i = 0; i < n; i++) {
+        processes[i].turnaroundTime = processes[i].burstTime + processes[i].waitingTime;
+        averageWaitingTime += processes[i].waitingTime;
+        averageTurnaroundTime += processes[i].turnaroundTime;
+        printf("P[%d]\t\t%d\t\t%d\t\t%d\t\t%d\n", processes[i].Pnum , processes[i].arrivalTime, processes[i].burstTime, processes[i].waitingTime, processes[i].turnaroundTime);
     }
- 
-    avwt=avwt/n;
-    avtat = avtat/n;
-    printf("\nAverage Waiting Time:%.2lf",avwt);
-    printf("\nAverage Turnaround Time:%.2lf",avtat);
-    printf("\n\nGhart Chart:\n");
-    printf("__________________________________________");
-    printf("\n");
+
+    averageWaitingTime /= n;
+    averageTurnaroundTime /= n;
+    printf("\nAverage Waiting Time: %.2f", averageWaitingTime);
+    printf("\nAverage Turnaround Time: %.2f", averageTurnaroundTime);
+    printf("\n\nGantt Chart:\n");
+    printf("__________________________________________\n");
     printf("|");
-    
-    for(int i=0;i<n;i++){
-        printf("| P[%d] |",i+1);
+
+    for(i = 0; i < n; i++) {
+        printf("| P[%d] |", processes[i].Pnum);
     }
-    printf("|");
-    printf("\n");
-    printf("__________________________________________");
-    printf("\n");
+    printf("|\n");
+    printf("__________________________________________\n");
+
     return 0;
 }
