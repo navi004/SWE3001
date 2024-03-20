@@ -32,7 +32,7 @@ int main() {
 
     struct Customer customers[n];
 
-    printf("Enter the customer id and distance from the delivery location:\n");
+    printf("Enter the customer Booking Time and distance from the delivery location:\n");
     for (i = 0; i < n; i++) {
         customers[i].id = i+1;
         printf("Customer %d: ", i + 1);
