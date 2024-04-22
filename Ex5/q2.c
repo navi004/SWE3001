@@ -123,3 +123,138 @@ int main() {
 
     return 0;
 }
+
+
+
+
+
+
+
+ /* 2. i. Consider an online delivery app, which delivers the product to the customer
+          who have booked online. The app always chooses the nearest customer first
+          for deliver and then next customer. Suppose 2 customers are booking the product
+          at the same time then the nearest customer will be chosen first.Consider the
+          booking time as arrival time. Choose an appropriate scheduling algorithm to 
+          delivery the product in an efficient manner(bustime = distance)
+
+      ii. For the same app compute for the frequent customer will be given discount 
+          and consider that the customer is chosen with discount code as highest 
+          protity(busttime = distance, priority = frequency)
+
+    Write a program in c to implement 2 scheduling algorithm for case i and ii.
+    Display all results on screen.
+ */
+
+#include <stdio.h>
+
+struct Customer {
+    int id;
+    int BTime;
+    int distance;
+    int waitingTime;
+    int priority;
+    int turnaroundTime
+};
+
+int main(){
+    int n;
+    float avg_taTime = 0.00,avg_wtTime = 0.00;
+    printf("Enter the number of Customers: ");
+    scanf("%d",&n);
+    struct Customer customers[n];
+    printf("Enter the Booking Time(Arrival Time)\n");
+    for(int i=0;i<n;i++){
+        customers[i].id = i+1;
+        printf("C[%d] : ",customers[i].id);
+        scanf("%d",&customers[i].BTime);
+    }
+
+    printf("Enter the Distance(Burst Time)\n");
+    for(int i=0;i<n;i++){
+        customers[i].id = i+1;
+        printf("C[%d] : ",customers[i].id);
+        scanf("%d",&customers[i].distance);
+    }
+    int flag = 0;
+    printf("Enter the option(Priority -1 | SJF -0): ");
+    scanf("%d",&flag);
+
+    //For Priority
+    if(flag == 1){
+        printf("Enter the discout Code for each Customer:\n");
+        for(int i =0;i<n;i++){
+            printf("C[%d] : ",customers[i].id);
+            scanf("%d",&customers[i].priority);
+        }
+        //Sorting
+        for(int i=0;i<n-1;i++){
+            for(int j=0;j<n-i-1;j++){
+                if(customers[j].priority > customers[j+1].priority){
+                    struct Customer temp = customers[j];
+                    customers[j] = customers[j+1];
+                    customers[j+1] = temp; 
+                }
+            }
+        }
+    }
+    //For SJF
+    else{
+        for(int i=0;i<n-1;i++){
+            for(int j=0;j<n-i-1;j++){
+                if(customers[j].distance > customers[j+1].distance){
+                    struct Customer temp = customers[j];
+                    customers[j] = customers[j+1];
+                    customers[j+1] = temp;
+                }
+                else if(customers[j].distance == customers[j+1].distance ){
+                    if(customers[j].BTime > customers[j+1].BTime){
+                        struct Customer temp = customers[j];
+                        customers[j] = customers[j+1];
+                        customers[j+1] = temp; 
+                    }
+                }
+            }
+        }
+    }
+    // Calculate waiting time for each process
+    customers[0].waitingTime = 0;
+    for (int i = 1; i < n; i++) {
+        customers[i].waitingTime = 0;
+        for (int j = 0; j < i; j++) {
+            customers[i].waitingTime += customers[j].distance;
+        }
+        customers[i].waitingTime -= customers[i].BTime;
+    }
+
+    // Calculate turnaround time for each process
+    for (int i = 0; i < n; i++) {
+        customers[i].turnaroundTime = customers[i].waitingTime + customers[i].distance;
+        avg_wtTime += customers[i].waitingTime;
+        avg_taTime += customers[i].turnaroundTime;
+    }
+
+    avg_taTime /= n;
+    avg_wtTime /= n;
+    printf("CustomerId\tBookingTime\tDistance\tPriority\n");
+    for(int i=0;i<n;i++){ 
+        printf("%d\t\t%d\t\t%d",customers[i].id,customers[i].BTime,customers[i].distance);
+        if(flag == 1){
+            printf("\t\t%d",customers[i].priority);
+        }
+        printf("\n");
+    }
+    printf("\nCustomerId\tWaiting Time\tTurnaround Time\n");
+    for(int i=0;i<n;i++){
+        printf("%d\t\t%d\t\t%d\n",customers[i].id,customers[i].waitingTime,customers[i].turnaroundTime);
+    }
+    printf("\n");
+
+    printf("Average Waiting Time : %d\n",avg_wtTime);
+    printf("Average Turnaround Time : %d\n",avg_taTime);
+    printf("|");
+    for(int i=0;i<n;i++){
+        printf("| C[%d] |",customers[i].id);
+    }
+    printf("|");
+    return 0;
+}
