@@ -11,11 +11,15 @@ dislpay gant chart and all results on screen.(busttime = #vehicles)
 */
 #include <stdio.h>
 #define TimeQuantum 3
+
+
 int main(){
     int road[4] = {0,0,0,0};
     int turn = 0;
-    int time,btime = 0;
-    int wait[4],tot[4];
+    int time,ttime = 0;
+    int wait[4] = {0,0,0,0};
+    int tot[4] = {0,0,0,0};
+    
     for(int i =0;i<4;i++){
         printf("Enter number of vehicles in road %d: ",i);
         scanf("%d",&road[i]);
@@ -24,21 +28,39 @@ int main(){
     //printf("sum=%d\n",road[0]+road[1]+road[2]+road[3]);
     
     while((road[0]+road[1]+road[2]+road[3])>0){
-        printf(">Time %d\t Road %d\t Vehicles %d",time,turn,road[turn]);
+        printf(">Time %d\t Road %d\t Vehicles %d",ttime,turn,road[turn]);
+        
         road[turn]-=10;
         if(road[turn]<=0){
+            //road[turn] = 0;
             printf("\t>>Road %d empty.",turn);
         }
         printf("\n");
         
-        if(((time%TimeQuantum==0) && (time!=0)) || (road[turn]==0)){
+        for(int i=0;i<4;i++){
+            if(road[i]!=0){
+                if(i!=turn){
+                    wait[i]++;
+                }
+                tot[i]++;
+            }
+        }
+        
+        time++;
+        ttime++;
+        
+        if((time == TimeQuantum) || (road[turn]<=0)){
+            printf(">>Switching light>> Road %d remaining cars %d.\n",turn,road[turn]);
             do{
+                time = 0;
                 turn = (turn+1)%4;
             }while((road[turn]<=0) && (road[0]+road[1]+road[2]+road[3]>0));
         }
-        time+=1;
         
     }
-
+    printf("\nLane\t\t Waiting time\t\tTurnaround time\n");
+    for(int i=0; i<4; i++){
+        printf("%d\t\t\t%d\t\t\t%d\n",i,wait[i],tot[i]);
+    }
 
 }
